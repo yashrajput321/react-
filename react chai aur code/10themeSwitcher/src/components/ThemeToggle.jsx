@@ -2,9 +2,9 @@ import { useTheme } from '../hooks/useTheme';
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  console.log("theme: ",theme)
+  // console.log("theme: ",theme)
 
-  console.log(window.matchMedia('(prefers-color-scheme: dark)').matches)
+  // console.log(window.matchMedia('(prefers-color-scheme: dark)').matches)
 
   const onSystem =()=>{
     if(window.matchMedia('(prefers-color-scheme: dark)').matches){
