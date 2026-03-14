@@ -8,6 +8,11 @@ const Clock = () =>{
             setDate(new Date())
         },1000)
         console.log("useEffect executes")
+
+        return () => {
+            clearInterval(timerId)
+            console.log("useEffect cleanup")
+        }
     },[])
     
     return  (
