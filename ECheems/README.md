@@ -1,16 +1,58 @@
-# React + Vite
+# ECheems
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+ECheems is a modern e-commerce web application built with React. It provides a seamless shopping experience with features like user authentication, product browsing, and a shopping cart. The app is designed to be responsive and user-friendly, utilizing the latest web technologies for optimal performance.
 
-Currently, two official plugins are available:
+## Features
+- **User Authentication**: Login functionality to secure user accounts.
+- **Home Page**: Welcome page with navigation to other sections.
+- **Product Listing**: Browse available products.
+- **Shopping Cart**: Add items to cart and manage purchases.
+- **404 Page**: Custom not found page for invalid routes.
+- **Responsive Design**: Built with Tailwind CSS for mobile and desktop compatibility.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
+- **Frontend**: React 19
+- **Routing**: React Router DOM
+- **Styling**: Tailwind CSS
+- **Build Tool**: Vite
+- **State Management**: React hooks (useState, etc.)
+- **Utilities**: js-cookie for cookie management
+- **Linting**: ESLint
 
-## React Compiler
+## Installation
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd echeems
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-## Expanding the ESLint configuration
+3. Start the development server:
+   ```
+   npm run dev
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+4. Open your browser and navigate to `http://localhost:5173` (default Vite port).
+
+## Usage
+- Navigate to `/login` to log in.
+- Visit `/` for the home page.
+- Browse products at `/products`.
+- Manage your cart at `/cart`.
+
+## Scripts
+- `npm run dev`: Start the development server.
+- `npm run build`: Build the project for production.
+- `npm run lint`: Run ESLint for code quality checks.
+- `npm run preview`: Preview the production build.
+
+## Contributing
+Feel free to submit issues and pull requests. Ensure all changes pass the linting checks.
+
+## License
+This project is private and not licensed for public use.
