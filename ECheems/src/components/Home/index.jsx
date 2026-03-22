@@ -1,7 +1,14 @@
+import Cookies from 'js-cookie'
 import Header from '../Header'
+import { Navigate } from 'react-router-dom'
 import './index.css'
 
-const Home = () => (
+const Home = () => {
+  const jwtToken = Cookies.get('jwt_token')
+  if(jwtToken === undefined){
+    return <Navigate to='/login' replace/>
+  }
+  return(
   <>
     <Header />
     <div className="home-container">
@@ -30,6 +37,6 @@ const Home = () => (
       />
     </div>
   </>
-)
+)}
 
 export default Home

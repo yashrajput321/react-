@@ -1,6 +1,9 @@
 import {Component} from 'react'
 import logo from '../../assets/cheemsstore logo.png'
 import { useNavigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
+
 
 import './index.css'
 
@@ -20,8 +23,9 @@ class LoginForm extends Component {
     this.setState({password: event.target.value})
   }
 
-  onSubmitSuccess = () => {
+  onSubmitSuccess = (jwt_token) => {
     const {navigate} = this.props
+    Cookies.set('jwt_token', jwt_token, {expires: 30})
     navigate('/', {replace: true})
   }
 
@@ -47,7 +51,7 @@ class LoginForm extends Component {
     // console.log(response)
 
     if (response.ok === true) {
-      this.onSubmitSuccess()
+      this.onSubmitSuccess(data.jwt_token)
     }
     else{
       this.onSubmitFailure(data.error_msg)
@@ -91,6 +95,11 @@ class LoginForm extends Component {
   }
 
   render() {
+    const jwtToken = Cookies.get('jwt_token')
+    if(jwtToken){
+      return <Navigate to='/' replace/>
+    }
+
     const {showErrorMsg, errorMsg} = this.state
     return (
       <div className="login-form-container">
