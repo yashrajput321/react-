@@ -1,4 +1,4 @@
-import AllProductsSection from '../AllProductsSection'
+import AllProductsSection from '../AllProductSection'
 
 import Header from '../Header'
 
