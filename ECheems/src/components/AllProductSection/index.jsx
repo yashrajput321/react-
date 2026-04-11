@@ -1,3 +1,4 @@
+// AllProductSection component - All products display with category, rating, and price filtering
 import {useEffect, useState} from 'react'
 import {TailSpin } from 'react-loader-spinner'
 import Cookies from 'js-cookie'

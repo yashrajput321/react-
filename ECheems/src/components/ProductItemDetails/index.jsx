@@ -1,3 +1,4 @@
+// ProductItemDetails component - Detailed product view with API fetching, quantity controls, and add to cart
 import {useEffect, useState} from 'react'
 import {useParams, Link, useNavigate} from 'react-router-dom'
 import Cookies from 'js-cookie'

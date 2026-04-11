@@ -1,3 +1,4 @@
+// Cart component - Shopping cart management with item quantity controls and checkout
 import {useEffect, useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import Header from '../Header'

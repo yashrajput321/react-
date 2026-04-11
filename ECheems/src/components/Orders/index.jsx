@@ -1,3 +1,4 @@
+// Orders component - Order history page with expandable details, download, and order again
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Header from '../Header'

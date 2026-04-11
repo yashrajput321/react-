@@ -1,3 +1,4 @@
+// LoginForm component - User authentication with JWT token storage
 import {Component} from 'react'
 import logo from '../../assets/cheemsstore logo.png'
 import { useNavigate } from "react-router-dom";
@@ -113,6 +114,15 @@ class LoginForm extends Component {
           className="login-image"
           alt="website login"
         />
+
+          <p>
+            Prime member:-
+            username: rahul
+            password: rahul@2021
+            Non-Prime member:-
+            username: raja
+            password: raja@2021
+          </p>
         <form className="form-container" onSubmit={this.onSubmitForm}>
           <img
             src={logo}

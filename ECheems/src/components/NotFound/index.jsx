@@ -1,3 +1,4 @@
+// NotFound component - 404 error page for invalid routes
 import './index.css'
 
 const NotFound = () => (

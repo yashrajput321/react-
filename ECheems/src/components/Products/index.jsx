@@ -1,3 +1,4 @@
+// Products component - Main products page with prime deals and all products sections
 import AllProductsSection from '../AllProductSection'
 import PrimeDealsSection from '../PrimeDealsSection'
 

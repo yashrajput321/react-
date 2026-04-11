@@ -1,3 +1,4 @@
+// SimilarProductItem component - Similar products card shown on product details page
 import './index.css'
 import ProductCard from '../ProductCard'
 

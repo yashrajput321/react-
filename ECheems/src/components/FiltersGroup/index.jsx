@@ -1,4 +1,5 @@
 //FiltersGroup/index.js
+// FiltersGroup component - Sidebar with category, rating, and price filters
 import {BsSearch} from 'react-icons/bs'
 
 import './index.css'

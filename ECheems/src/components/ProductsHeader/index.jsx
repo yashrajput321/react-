@@ -1,3 +1,4 @@
+// ProductsHeader component - Products page header with sort and display options
 //ProductsHeader/index.js
 import {BsFilterRight} from 'react-icons/bs'
 

@@ -1,3 +1,4 @@
+// ProductCard component - Individual product card shown in product listings
 import {Link} from 'react-router-dom'
 import './index.css'
 

@@ -1,3 +1,4 @@
+// PrimeDealsSection component - Featured/special deals section with discounted products
 import {useEffect, useState} from 'react'
 import {TailSpin } from 'react-loader-spinner'
 import Cookies from 'js-cookie'

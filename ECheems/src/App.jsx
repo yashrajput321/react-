@@ -1,3 +1,5 @@
+// App component - Main router configuration with all application routes
+// Uses protected routes to ensure only authenticated users can access pages
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import LoginForm from './components/LoginForm'

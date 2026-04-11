@@ -1,3 +1,4 @@
+// Header component - Navigation bar with links to all main pages and logout button
 import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'

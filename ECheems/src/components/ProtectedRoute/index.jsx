@@ -1,3 +1,4 @@
+// ProtectedRoute - Wrapper component that protects routes from unauthorized access
 import { Navigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 

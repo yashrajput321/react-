@@ -1,3 +1,4 @@
+// Home component - Landing page with welcome message and Shop Now button
 import Header from '../Header'
 import './index.css'
 

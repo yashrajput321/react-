@@ -1,3 +1,4 @@
+// Checkout component - Complete checkout with address management, coupon codes, and order placement
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Header from '../Header'
