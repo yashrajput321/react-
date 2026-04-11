@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import {TailSpin } from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import ProductCard from '../ProductCard'
-import Cheems from '../../assets/prime cheems.png';
+import Cheems from '../../assets/prime-cheems.png';
 import './index.css'
 
 const PrimeDealsSection = () => {

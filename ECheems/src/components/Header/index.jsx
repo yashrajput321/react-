@@ -2,7 +2,7 @@
 import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
-import logo from '../../assets/cheemsstore logo.png';
+import logo from '../../assets/cheems-store-logo.png';
 import './index.css'
 
 
