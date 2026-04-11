@@ -6,9 +6,14 @@ import ProductCard from '../ProductCard'
 import FiltersGroup from '../FiltersGroup'
 import './index.css'
 
-const AllProductsSection = () => {
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
 
-  const categoryOptions = [
+const categoryOptions = [
   {
     name: 'Clothing',
     categoryId: '1',
@@ -31,7 +36,7 @@ const AllProductsSection = () => {
   },
 ]
 
-  const sortbyOptions = [
+const sortbyOptions = [
   {
     optionId: 'PRICE_HIGH',
     displayText: 'Price (High-Low)',
@@ -41,7 +46,6 @@ const AllProductsSection = () => {
     displayText: 'Price (Low-High)',
   },
 ]
-
 
 const ratingsList = [
   {
@@ -66,27 +70,41 @@ const ratingsList = [
   },
 ]
 
-  const [activeOptionId, setActiveOptionId] = useState(sortbyOptions[0].optionId) 
+const AllProductsSection = () => {
+  const [activeOptionId, setActiveOptionId] = useState(sortbyOptions[0].optionId)
   const [productsList, setProductsList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [activeCategoryId, setActiveCategoryId] = useState("")
-  const [searchInput, setSearchInput] = useState("")
-  const [activeRatingId, setActiveRatingId] = useState("")  
+  const [activeCategoryId, setActiveCategoryId] = useState('')
+  const [searchInput, setSearchInput] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [activeRatingId, setActiveRatingId] = useState('')
+  const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial)
 
   useEffect(() => {
     const getProducts = async () => {
+      setApiStatus(apiStatusConstants.inProgress)
+      setIsLoading(true)
+      setError(null)
+
       try {
-        setIsLoading(true)
-
         const jwtToken = Cookies.get('jwt_token')
-
         if (!jwtToken) {
           throw new Error('Token missing')
         }
 
-        const response = await fetch(`https://apis.ccbp.in/products?sort_by=${activeOptionId}`, 
-          {
+        const queryParameters = [
+          `sort_by=${activeOptionId}`,
+          activeCategoryId ? `category=${activeCategoryId}` : null,
+          activeRatingId ? `rating=${activeRatingId}` : null,
+          searchQuery ? `title_search=${searchQuery}` : null,
+        ]
+          .filter(Boolean)
+          .join('&')
+
+        const apiUrl = `https://apis.ccbp.in/products?${queryParameters}`
+
+        const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -94,56 +112,59 @@ const ratingsList = [
         })
 
         if (!response.ok) {
-          throw new Error('Failed to fetch')
+          throw new Error('Failed to fetch products')
         }
 
         const data = await response.json()
-        
 
         const updatedData = data.products.map(product => ({
+          id: product.id,
           title: product.title,
           brand: product.brand,
           price: product.price,
-          id: product.id,
           imageUrl: product.image_url,
           rating: product.rating,
         }))
 
         setProductsList(updatedData)
+        setApiStatus(apiStatusConstants.success)
       } catch (err) {
         setError(err.message)
+        setApiStatus(apiStatusConstants.failure)
       } finally {
         setIsLoading(false)
       }
     }
-    
+
     getProducts()
-  }, [activeOptionId])
+  }, [activeOptionId, activeCategoryId, activeRatingId, searchQuery])
 
   const clearFilters = () => {
-    setActiveCategoryId("")
-    setSearchInput("")
-    setActiveRatingId("")
-  } 
-
-  const updateActiveOptionId = activeOptionId => {
-    setActiveOptionId(activeOptionId)
+    setActiveCategoryId('')
+    setSearchInput('')
+    setSearchQuery('')
+    setActiveRatingId('')
   }
 
-  const renderProductsList = () => (
-    <>
-      <ProductsHeader
-          sortbyOptions={sortbyOptions}
-          activeOptionId={activeOptionId}
-          updateActiveOptionId={updateActiveOptionId}
-        />
-      <ul className="products-list">
-        {productsList.map(product => (
-          <ProductCard productData={product} key={product.id} />
-        ))}
-      </ul>
-    </>
-  )
+  const changeSortby = optionId => {
+    setActiveOptionId(optionId)
+  }
+
+  const changeCategory = categoryId => {
+    setActiveCategoryId(categoryId)
+  }
+
+  const changeRating = ratingId => {
+    setActiveRatingId(ratingId)
+  }
+
+  const changeSearchInput = value => {
+    setSearchInput(value)
+  }
+
+  const enterSearchInput = value => {
+  setSearchQuery(value ?? searchInput)
+}
 
   const renderLoader = () => (
     <div className="products-loader-container">
@@ -157,26 +178,7 @@ const ratingsList = [
     </div>
   )
 
-  if (isLoading) return renderLoader()
-  if (error) return <p>Error: {error}</p>
-
-  changeRating = activeRatingId => {
-    this.setState({activeRatingId}, this.getProducts)
-  }
-
-  changeCategory = activeCategoryId => {
-    this.setState({activeCategoryId}, this.getProducts)
-  }
-
-  enterSearchInput = () => {
-    this.getProducts()
-  }
-
-  changeSearchInput = searchInput => {
-    this.setState({searchInput})
-  }
-
-  renderFailureView = () => (
+  const renderFailureView = () => (
     <div className="products-error-view-container">
       <img
         src="https://assets.ccbp.in/frontend/react-js/nxt-trendz/nxt-trendz-products-error-view.png"
@@ -189,80 +191,78 @@ const ratingsList = [
       <p className="products-failure-description">
         We are having some trouble processing your request. Please try again.
       </p>
+      <button type="button" className="retry-button" onClick={clearFilters}>
+        Reload Filters
+      </button>
     </div>
   )
 
-  renderProductsListView = () => {
-    const {productsList, activeOptionId} = this.state
-    const shouldShowProductsList = productsList.length > 0
-
-    return shouldShowProductsList ? (
-      <div className="all-products-container">
-        <ProductsHeader
-          activeOptionId={activeOptionId}
-          sortbyOptions={sortbyOptions}
-          changeSortby={this.changeSortby}
-        />
-        <ul className="products-list">
-          {productsList.map(product => (
-            <ProductCard productData={product} key={product.id} />
-          ))}
-        </ul>
-      </div>
-    ) : (
-      <div className="no-products-view">
-        <img
-          src="https://assets.ccbp.in/frontend/react-js/nxt-trendz/nxt-trendz-no-products-view.png"
-          className="no-products-img"
-          alt="no products"
-        />
-        <h1 className="no-products-heading">No Products Found</h1>
-        <p className="no-products-description">
-          We could not find any products. Try other filters.
-        </p>
-      </div>
-    )
-  }
-
-  renderLoadingView = () => (
-    <div className="products-loader-container">
-      <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
+  const renderNoProductsView = () => (
+    <div className="no-products-view">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/nxt-trendz/nxt-trendz-no-products-view.png"
+        className="no-products-img"
+        alt="no products"
+      />
+      <h1 className="no-products-heading">No Products Found</h1>
+      <p className="no-products-description">
+        We could not find any products. Try changing the search or filter options.
+      </p>
     </div>
   )
 
-  renderAllProducts = () => {
-    const {apiStatus} = this.state
+  const renderProductsList = () => (
+    <>
+      <ProductsHeader
+        sortbyOptions={sortbyOptions}
+        activeOptionId={activeOptionId}
+        changeSortby={changeSortby}
+      />
+      <ul className="products-list">
+        {productsList.map(product => (
+          <ProductCard productData={product} key={product.id} />
+        ))}
+      </ul>
+    </>
+  )
 
-    switch (apiStatus) {
-      case apiStatusConstants.success:
-        return this.renderProductsListView()
-      case apiStatusConstants.failure:
-        return this.renderFailureView()
-      case apiStatusConstants.inProgress:
-        return this.renderLoadingView()
-      default:
-        return null
+  const renderProductsContent = () => {
+    if (isLoading) {
+      return renderLoader()
     }
+
+    if (apiStatus === apiStatusConstants.failure) {
+      return renderFailureView()
+    }
+
+    if (productsList.length === 0) {
+      return renderNoProductsView()
+    }
+
+    return renderProductsList()
   }
 
-  return(
-    <div>
-      <FiltersGroup
+  return (
+    <div className="all-products-section">
+      <aside className="filters-section">
+        <FiltersGroup
           searchInput={searchInput}
           categoryOptions={categoryOptions}
           ratingsList={ratingsList}
-          changeSearchInput={this.changeSearchInput}
-          enterSearchInput={this.enterSearchInput}
+          changeSearchInput={changeSearchInput}
+          enterSearchInput={enterSearchInput}
           activeCategoryId={activeCategoryId}
           activeRatingId={activeRatingId}
-          changeCategory={this.changeCategory}
-          changeRating={this.changeRating}
-          clearFilters={this.clearFilters}
+          changeCategory={changeCategory}
+          changeRating={changeRating}
+          clearFilters={clearFilters}
         />
-        {renderProductsList()}
+      </aside>
+      <main className="products-section">
+        {renderProductsContent()}
+      </main>
     </div>
-    )
+  )
 }
-
 
 export default AllProductsSection

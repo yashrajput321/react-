@@ -48,6 +48,11 @@ const Header = () => {
             Cart
           </Link>
         </li>
+        <li>
+          <Link to="/orders" className="nav-link">
+            My Orders
+          </Link>
+        </li>
       </ul>
       <button type="button" className="logout-desktop-btn" onClick={onLogout}>
         Logout

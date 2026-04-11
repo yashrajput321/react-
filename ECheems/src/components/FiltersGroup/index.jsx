@@ -39,7 +39,7 @@ const FiltersGroup = props => {
   )
 
   const renderCategoriesList = () => {
-    const {categoryOptions} = props
+    const {categoryOptions,} = props
 
     return categoryOptions.map(category => {
       const {changeCategory, activeCategoryId} = props
@@ -70,7 +70,7 @@ const FiltersGroup = props => {
 
   const onEnterSearchInput = event => {
     const {enterSearchInput} = props
-    if (event.key === 'Enter') {
+    if (event.key) {
       enterSearchInput()
     }
   }
@@ -79,6 +79,13 @@ const FiltersGroup = props => {
     const {changeSearchInput} = props
     changeSearchInput(event.target.value)
   }
+
+  const onclearInput = () => {
+    const {changeSearchInput, enterSearchInput} = props
+    changeSearchInput('')
+    enterSearchInput("")
+  }
+
 
   const renderSearchInput = () => {
     const {searchInput} = props
@@ -92,7 +99,14 @@ const FiltersGroup = props => {
           onChange={onChangeSearchInput}
           onKeyDown={onEnterSearchInput}
         />
-        <BsSearch className="search-icon" />
+        {searchInput ? (
+          <button
+            className="clear-btn cursor-pointer"
+            onClick={() => onclearInput()}
+          >
+            ❌
+          </button>
+        ):<BsSearch className="search-icon" />}
       </div>
     )
   }

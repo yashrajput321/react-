@@ -3,7 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LoginForm from './components/LoginForm'
 import Home from './components/Home'
 import Products from './components/Products'
+import ProductItemDetails from './components/ProductItemDetails'
 import Cart from './components/Cart'
+import Checkout from './components/Checkout'
+import Orders from './components/Orders'
 import NotFound from './components/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -28,17 +31,41 @@ const App = () => (
        />
 
       <Route
+       path="/products/:id" element={
+         <ProtectedRoute>
+           <ProductItemDetails />
+         </ProtectedRoute>
+       }
+      />
+
+      <Route
        path="/products" element={
        <ProtectedRoute>
        <Products />
        </ProtectedRoute>
        }
         />
-      
+
       <Route
        path="/cart" element={
         <ProtectedRoute>
           <Cart />
+        </ProtectedRoute>
+       }
+        />
+
+      <Route
+       path="/checkout" element={
+        <ProtectedRoute>
+          <Checkout />
+        </ProtectedRoute>
+       }
+        />
+
+      <Route
+       path="/orders" element={
+        <ProtectedRoute>
+          <Orders />
         </ProtectedRoute>
        }
         />
