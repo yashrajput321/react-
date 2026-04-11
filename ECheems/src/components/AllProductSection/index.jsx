@@ -1,11 +1,23 @@
 import {useEffect, useState} from 'react'
-import { ThreeDots,Audio,TailSpin } from 'react-loader-spinner'
+import {TailSpin } from 'react-loader-spinner'
 import Cookies from 'js-cookie'
-
+import ProductsHeader from '../ProductsHeader'
 import ProductCard from '../ProductCard'
 import './index.css'
 
 const AllProductsSection = () => {
+
+  const sortbyOptions = [
+  {
+    optionId: 'PRICE_HIGH',
+    displayText: 'Price (High-Low)',
+  },
+  {
+    optionId: 'PRICE_LOW',
+    displayText: 'Price (Low-High)',
+  },
+]
+  const [activeOptionId, setActiveOptionId] = useState(sortbyOptions[0].optionId) 
   const [productsList, setProductsList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -33,6 +45,7 @@ const AllProductsSection = () => {
         }
 
         const data = await response.json()
+        
 
         const updatedData = data.products.map(product => ({
           title: product.title,
@@ -50,13 +63,21 @@ const AllProductsSection = () => {
         setIsLoading(false)
       }
     }
-
+    
     getProducts()
   }, [])
 
+  const updateActiveOptionId = activeOptionId => {
+    setActiveOptionId(activeOptionId)
+  }
+
   const renderProductsList = () => (
     <>
-      <h1 className="products-heading">All Products</h1>
+      <ProductsHeader
+          sortbyOptions={sortbyOptions}
+          activeOptionId={activeOptionId}
+          updateActiveOptionId={updateActiveOptionId}
+        />
       <ul className="products-list">
         {productsList.map(product => (
           <ProductCard productData={product} key={product.id} />

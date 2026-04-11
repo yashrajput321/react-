@@ -14,11 +14,17 @@ const Header = () => {
   navigate('/login',{replace:true})
   console.log("Token Remove")
   }
+
+  const toHome = () => {
+    navigate('/')
+  }
+
+
   
   return(
   <nav className="nav-header">
     <div className="nav-content">
-      <div className="logo-container">
+      <div className="logo-container cursor-pointer" onClick={toHome}>
         <img
           className="website-logo"
           src={logo}

@@ -2,6 +2,12 @@ import Header from '../Header'
 import './index.css'
 
 const Home = () => {
+
+  const shopNow = () => {
+    // Navigate to the products page when the "Shop Now" button is clicked
+    window.location.href = '/products'
+  }
+
   return(
   <>
     <Header />
@@ -20,7 +26,7 @@ const Home = () => {
           that way you are. So, celebrate the seasons new and exciting fashion
           in your own way.
         </p>
-        <button type="button" className="shop-now-button">
+        <button type="button" className="shop-now-button cursor-pointer active:cursor-pointer border p-4 bg-gray-50" onClick={shopNow}>
           Shop Now
         </button>
       </div>
