@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import { ThreeDots } from 'react-loader-spinner'
+import { ThreeDots,Audio,TailSpin } from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 
 import ProductCard from '../ProductCard'
@@ -67,7 +67,13 @@ const AllProductsSection = () => {
 
   const renderLoader = () => (
     <div className="products-loader-container">
-      <ThreeDots color="#0b69ff" height="50" width="50" />
+      <TailSpin
+        height="80"
+        width="80"
+        color="#4fa94d"
+        ariaLabel="tail-spin-loading"
+        visible={isLoading}
+      />
     </div>
   )
 
