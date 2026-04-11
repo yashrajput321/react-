@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Header from '../Header'
 import './index.css'
+import logo from '../../assets/cheems-store-logo.png'
 
 const ORDERS_STORAGE_KEY = 'cheems_orders'
 const CART_STORAGE_KEY = 'cheems_cart'
@@ -55,7 +56,7 @@ const Orders = () => {
   const renderEmptyOrders = () => (
     <div className="empty-orders-state">
       <img
-        src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-no-products-img.png"
+        src={logo}
         alt="no orders"
         className="empty-orders-image"
       />
