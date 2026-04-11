@@ -1,6 +1,6 @@
 // LoginForm component - User authentication with JWT token storage
 import {Component} from 'react'
-import logo from '../../assets/cheemsstore logo.png'
+import logo from '../../assets/cheems-store-logo.png'
 import { useNavigate } from "react-router-dom";
 import { Navigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
